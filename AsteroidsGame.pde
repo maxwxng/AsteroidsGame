@@ -1,7 +1,6 @@
 SpaceShip trek = new SpaceShip();
-  ArrayList <Asteroid>rocks = new ArrayList <Asteroid>();
-  ArrayList <Bullet>boom = new ArrayList <Bullet>();
-Star[] dot = new Star[300];
+
+
 boolean upIsPressed = false;
 boolean downIsPressed = false;
 boolean leftIsPressed = false;
@@ -10,43 +9,17 @@ boolean rightIsPressed = false;
 
 public void setup() 
 {
-  size(1000, 1000);
-  for(int i=0;i<dot.length;i++){
-    dot[i] = new Star();
-  } 
-  for(int b=0;b<50;b++){
-    rocks.add(b,new Asteroid());
-
-  }
+size(1000, 1000);
+ 
 } 
 public void draw() 
 {
   background(0);
-  trek.show();
-  trek.move();
-  for(int i=0;i<dot.length;i++){
-    dot[i].show();
-  }
-  for(int b=0;b<rocks.size();b++){
-    rocks.get(b).show();
-    rocks.get(b).move();
-    if(dist(trek.getX(),trek.getY(),rocks.get(b).getX(),rocks.get(b).getY())<25){
-    rocks.remove(b);
-  }  
-  }
-  for(int p=0;p<boom.size();p++){
-    boom.get(p).show();
-    boom.get(p).move();
-  }
-  for(int a=0;a<boom.size();a++){
-    for(int c=0;c<rocks.size();c++){
-      if(dist(boom.get(a).getX(),boom.get(a).getY(),rocks.get(c).getX(),rocks.get(c).getY())<20){
-        rocks.remove(c);
-        boom.remove(a);
-        break;
-      }
-    }
-  }
+
+
+
+
+
 
   
   //keys stuff
@@ -113,9 +86,7 @@ public void keyPressed(){
     trek.setDirectionX(0);
     trek.setDirectionY(0);
   }
-  if(key == 32){
-    boom.add(new Bullet(trek));//bullet
-  }
+
 
 }
 public void keyReleased(){
@@ -181,110 +152,6 @@ class SpaceShip extends Floater
 
 
    }
-}
-class Asteroid extends Floater
-{
-   private int rot;
-   public void setX(int x){myCenterX=x;}  
-   public int getX(){return (int)myCenterX;}   
-   public void setY(int y){myCenterY=y;}   
-   public int getY(){return (int)myCenterY;}   
-   public void setDirectionX(double x){myDirectionX=x;}   
-   public double getDirectionX(){return myDirectionX;}   
-   public void setDirectionY(double y){myDirectionY=y;}   
-   public double getDirectionY(){return myDirectionY;}   
-   public void setPointDirection(int degrees){myPointDirection=degrees;}  
-   public double getPointDirection(){return myPointDirection;} 
-   public Asteroid(){
-    myColor=color(112, 105, 104);
-    corners=6;
-    xCorners = new int[corners];
-    yCorners = new int [corners];
-
-    xCorners[0]=-16;
-    yCorners[0]=8;
-    xCorners[1]=-8;
-    yCorners[1]=12;
-    xCorners[2]=8;
-    yCorners[2]=8;
-    xCorners[3]=16;
-    yCorners[3]=0;
-    xCorners[4]=8;
-    yCorners[4]=-8;
-    xCorners[5]=-12;
-    yCorners[5]=-12;
-
-    myCenterX=(int)(Math.random()*1000);
-    myCenterY=(int)(Math.random()*1000); 
-    myDirectionX=(int)(Math.random()*7)-3;
-    myDirectionY=(int)(Math.random()*7)-3;
-    myPointDirection=0;    
-    rot=(int)(Math.random()*3)-1;
-  
-    
-   }
-   public void move(){
-      super.move();
-      rotate(rot);
-
-   }
-
-}
-class Bullet extends Floater{
-  public void setX(int x){myCenterX=x;}  
-   public int getX(){return (int)myCenterX;}   
-   public void setY(int y){myCenterY=y;}   
-   public int getY(){return (int)myCenterY;}   
-   public void setDirectionX(double x){myDirectionX=x;}   
-   public double getDirectionX(){return myDirectionX;}   
-   public void setDirectionY(double y){myDirectionY=y;}   
-   public double getDirectionY(){return myDirectionY;}   
-   public void setPointDirection(int degrees){myPointDirection=degrees;}  
-   public double getPointDirection(){return myPointDirection;} 
-  public Bullet(SpaceShip trek){
-    myCenterX=trek.getX();
-    myCenterY=trek.getY(); 
-    myPointDirection=trek.getPointDirection();
-    double dRadians =myPointDirection*(Math.PI/180);
-    myDirectionX=5 * Math.cos(dRadians);
-    myDirectionY=5 * Math.sin(dRadians);
-  }
-  public void show(){
-    noStroke();
-    fill(26, 255, 255);
-    ellipse((float)myCenterX,(float)myCenterY,12,12);
-  }
-  public void move(){
-    myCenterX += myDirectionX;    
-    myCenterY += myDirectionY;
-    //dont loop
-    for(int i=0;i<boom.size();i++){
-    if(myCenterX>1000){
-      boom.remove(this);
-    }
-    if(myCenterY>1000){
-      boom.remove(this);
-    }
-    if(myCenterX<0){
-      boom.remove(this);
-    }
-    if(myCenterY<0){
-      boom.remove(this);
-    } 
-  }
-
-  }
-}
-class Star{ 
-  private int mySx,mySy;
-  Star(){
-    mySx=(int)(Math.random()*1000);
-    mySy=(int)(Math.random()*1000);
-  }
-  public void show(){
-    fill(255);
-    ellipse(mySx,mySy,1,1);
-  }
 }
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
